@@ -5,13 +5,18 @@ const SignIn = ({setUser}) => {
     const [id , setId] = useState("")
     const [password , setPassword] = useState("")
     const navigate = useNavigate();
+
 const handlechange = async() => {
    const re =  await login({
         id, 
         password,
     })
+    alert("로그인 완료")
     const {nickname, userId, avatar} = re.data
     setUser({nickname, userId, avatar})
+    navigate("/")
+
+    
 }
 
 
