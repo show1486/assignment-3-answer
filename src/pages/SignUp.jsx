@@ -26,7 +26,8 @@ const SignUp = () => {
             nickname
         })
         if(re){
-            alert(`${re?.data?.message}`);
+            alert(`${re?.message}`);
+            console.log(re)
             navigate("/sign_in");
         }
     }
