@@ -22,7 +22,7 @@ function App() {
           <Route path="/" element={<Layout user={user} setUser={setUser}/>}>
             <Route
             index
-            element={<Home expenses={expenses} setExpenses={setExpenses} />}
+            element={<Home user={user}expenses={expenses} setExpenses={setExpenses} />}
             />
             <Route
             path="/detail/:id"
