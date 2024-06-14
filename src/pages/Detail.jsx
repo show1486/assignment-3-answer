@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { getExpense } from "../lib/api/expense";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { getExpense, putExpense,deleteExpense } from "../lib/api/expense";
 
 const Container = styled.div`
   max-width: 800px;
@@ -71,7 +71,7 @@ export default function Detail({ expenses, setExpenses }) {
   const {data:selectedExpense,
     isLoading, error
   } = useQuery({queryKey:["expenses", id], queryFn:getExpense} );
-
+  const queryClient = new QueryClient();
 
   useEffect(()=>{
     if(selectedExpense){
@@ -81,6 +81,16 @@ export default function Detail({ expenses, setExpenses }) {
       setDescription(selectedExpense.description)
     }
   },[selectedExpense])
+
+  const mutationEdit = useMutation({
+    mutationFn:putExpense,
+    onSuccess:()=>{
+      navigate("/")
+      queryClient.invalidateQueries(["expenses"]);
+    }
+  });
+
+
   const editExpense = () => {
     const datePattern = /^\d{4}-\d{2}-\d{2}$/;
     if (!datePattern.test(date)) {
@@ -92,27 +102,26 @@ export default function Detail({ expenses, setExpenses }) {
       return;
     }
 
-    const newExpenses = expenses.map((expense) => {
-      if (expense.id !== id) {
-        return expense;
-      } else {
-        return {
-          ...expense,
-          date: date,
-          item: item,
-          amount: amount,
-          description: description,
-        };
-      }
-    });
-    setExpenses(newExpenses);
-    navigate("/");
+    const newExpense = {
+      id:id,
+      date:date,
+      item:item,
+      amount:parseInt(amount, 10),
+      description:description,
+    }
+    mutationEdit.mutate(newExpense)
   };
 
-  const deleteExpense = () => {
-    const newExpenses = expenses.filter((expense) => expense.id !== id);
-    setExpenses(newExpenses);
-    navigate("/");
+  const mutationdelete = useMutation({
+    mutationFn:deleteExpense,
+    onSuccess:()=>{
+      navigate("/")
+      queryClient.invalidateQueries(["expenses"]);
+    }
+  });
+
+  const handleDelete = () => {
+    mutationdelete.mutate(id);
   };
 
   return (
@@ -159,7 +168,7 @@ export default function Detail({ expenses, setExpenses }) {
       </InputGroup>
       <ButtonGroup>
         <Button onClick={editExpense}>수정</Button>
-        <Button danger="true" onClick={deleteExpense}>
+        <Button danger="true" onClick={handleDelete}>
           삭제
         </Button>
         <BackButton onClick={() => navigate(-1)}>뒤로 가기</BackButton>

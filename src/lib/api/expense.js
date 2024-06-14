@@ -33,3 +33,24 @@ export const postExpense = async (newExpense) => {
     alert(respone?.data?.message);
   }
 };
+
+export const putExpense = async (updateExpense) => {
+  const { id, ...rest } = updateExpense;
+  try {
+    const respone = await axios.put(`${JSON_SERVER_HOST}/expenses/${id}`, rest);
+    return respone.data;
+  } catch (error) {
+    console.log(error);
+    alert(respone?.data?.message);
+  }
+};
+
+export const deleteExpense = async (id) => {
+  try {
+    const respone = await axios.delete(`${JSON_SERVER_HOST}/expenses/${id}`);
+    return respone.data;
+  } catch (error) {
+    console.log(error);
+    alert(respone?.data?.message);
+  }
+};
