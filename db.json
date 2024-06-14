@@ -1,16 +1,6 @@
 {
   "expenses": [
     {
-      "id": "a5c0d8de-d010-4d07-9934-29765051a7ea",
-      "month": 1,
-      "date": "2024-01-07",
-      "item": "개인사업",
-      "amount": 1000,
-      "description": "X(구 트위터)",
-      "createdBy": "Musk",
-      "userId": "41b13327bc07-5f9c-4650-941f"
-    },
-    {
       "id": "0d0a966e-5c35-4bf0-aca4-f2b1265a432d",
       "month": 1,
       "date": "2024-01-13",
@@ -67,6 +57,13 @@
       "item": "독서",
       "amount": 200000,
       "description": "독서하기"
+    },
+    {
+      "date": "2024-01-31",
+      "item": "독서실",
+      "amount": 201000,
+      "description": "도서관",
+      "id": "b014b2a7-9dc7-42a3-ab08-6ca7fc3d9d32"
     }
   ]
 }

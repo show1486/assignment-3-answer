@@ -1,5 +1,5 @@
 import axios from "axios";
-const JSON_SERVER_HOST = "http://localhost:5002";
+const JSON_SERVER_HOST = "https://incongruous-walnut-othnielia.glitch.me";
 
 export const getExpenses = async () => {
   try {
